@@ -83,10 +83,10 @@
         </dependency>
 
         <!-- Bcrypt -->
-        <!--dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-bcrypt</artifactId>
-        </dependency-->
+            <artifactId>quarkus-elytron-security</artifactId>
+        </dependency>
 </dependencies>
 
     <build>

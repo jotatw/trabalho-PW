@@ -1,29 +1,69 @@
 package com.br.ifg.luziania.trabalhopw.model;
 
 import jakarta.persistence.*;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import java.time.LocalDateTime;
+
+import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "usuarios", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-public class Usuario extends PanacheEntityBase {
+@Table(name = "usuarios")
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column(nullable = false, length = 100)
-    public String nome;
+    private String nome;
 
     @Column(nullable = false, unique = true, length = 150)
-    public String email;
+    private String email;
+
+    @Column(name = "senha_hash", nullable = false, length = 255)
+    private String senhaHash;
+
+    @Column(name = "criado_em", nullable = false, updatable = false)
+    private OffsetDateTime criadoEm;
 
     @Column(nullable = false)
-    public String senhaHash;          // hash BCrypt, nunca a senha em texto puro
+    private Boolean ativo;
 
-    @Column(nullable = false, updatable = false)
-    public LocalDateTime criadoEm = LocalDateTime.now();
+    public Long getId() {
+        return id;
+    }
 
-    @Column(nullable = false)
-    public Boolean ativo = true;
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenhaHash() {
+        return senhaHash;
+    }
+
+    public void setSenhaHash(String senhaHash) {
+        this.senhaHash = senhaHash;
+    }
+
+    public OffsetDateTime getCriadoEm() {
+        return criadoEm;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
 }

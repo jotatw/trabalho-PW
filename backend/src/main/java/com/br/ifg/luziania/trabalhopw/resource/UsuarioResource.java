@@ -1,8 +1,11 @@
 package com.br.ifg.luziania.trabalhopw.resource;
 
 import com.br.ifg.luziania.trabalhopw.dto.UsuarioDTO;
+import com.br.ifg.luziania.trabalhopw.model.Sessao;
 import com.br.ifg.luziania.trabalhopw.model.Usuario;
+import com.br.ifg.luziania.trabalhopw.service.LogService;
 import com.br.ifg.luziania.trabalhopw.service.UsuarioService;
+import com.br.ifg.luziania.trabalhopw.service.SessaoService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -12,7 +15,6 @@ import com.br.ifg.luziania.trabalhopw.dto.LoginDTO;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.Consumes;
-
 import java.util.List;
 
 @Path("/usuarios")
@@ -21,6 +23,12 @@ public class UsuarioResource {
 
     @Inject
     UsuarioService usuarioService;
+
+    @Inject
+    SessaoService sessaoService;
+
+    @Inject
+    LogService logService;
 
     @GET
     public List<UsuarioDTO> listar() {
@@ -54,7 +62,22 @@ public class UsuarioResource {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        return Response.ok().build();
+        Usuario usuarioAutenticado = usuario.get();
+
+        Sessao sessao = sessaoService.iniciarSessao(usuarioAutenticado);
+
+        logService.registrar(
+                usuarioAutenticado,
+                sessao,
+                "USO",
+                "INFO",
+                "LOGIN",
+                "Usuário realizou login no sistema"
+        );
+
+        UsuarioDTO usuarioDTO = converterParaDTO(usuarioAutenticado);
+
+        return Response.ok(usuarioDTO).build();
     }
 }
 

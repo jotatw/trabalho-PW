@@ -90,4 +90,8 @@ public class Log {
     public OffsetDateTime getDataHora() {
         return dataHora;
     }
+
+    public void setDataHora(OffsetDateTime dataHora) {
+        this.dataHora = dataHora;
+    }
 }

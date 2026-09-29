@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Usuários - Locadora</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="app" id="app-layout">
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h2>Usuários</h2>
+                <p>Gerenciamento de usuários do sistema</p>
+            </div>
+
+            <div class="user-info">
+                <span id="user-name">Usuário</span>
+            </div>
+
+        </header>
+
+        <section class="page-content">
+
+            <div class="page-header">
+                <div>
+                    <h3>Usuários cadastrados</h3>
+                    <p>Visualize os usuários registrados no sistema.</p>
+                </div>
+            </div>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Perfil</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="usuarios-lista">
+                    <tr>
+                        <td colspan="5">
+                            Carregando usuários...
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/layout.js"></script>
+<script src="../js/usuarios.js"></script>
+
+<script>
+    carregarLayout("usuarios");
+    carregarUsuarios();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - Locadora</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="app" id="app-layout">
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h2>Dashboard</h2>
+                <p>Visão geral do sistema</p>
+            </div>
+
+            <div class="user-info">
+                <span id="user-name">Usuário</span>
+            </div>
+
+        </header>
+
+        <section class="dashboard-content">
+
+            <div class="dashboard-card">
+                <h3>Clientes</h3>
+                <strong>0</strong>
+                <p>Clientes cadastrados</p>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Veículos</h3>
+                <strong>0</strong>
+                <p>Veículos cadastrados</p>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Reservas</h3>
+                <strong>0</strong>
+                <p>Reservas ativas</p>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Locações</h3>
+                <strong>0</strong>
+                <p>Locações em andamento</p>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="js/layout.js"></script>
+<script src="js/dashboard.js"></script>
+
+<script>
+    carregarLayout("dashboard");
+</script>
+
+</body>
+
+</html>

@@ -69,8 +69,7 @@ public class UsuarioResource {
         logService.registrar(
                 usuarioAutenticado,
                 sessao,
-                "USO",
-                "INFO",
+                "USO",                "INFO",
                 "LOGIN",
                 "Usuário realizou login no sistema"
         );

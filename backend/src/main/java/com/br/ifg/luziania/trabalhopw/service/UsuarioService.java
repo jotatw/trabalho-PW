@@ -2,7 +2,6 @@ package com.br.ifg.luziania.trabalhopw.service;
 
 import com.br.ifg.luziania.trabalhopw.model.Usuario;
 import com.br.ifg.luziania.trabalhopw.repository.UsuarioRepository;
-import com.br.ifg.luziania.trabalhopw.service.LogService;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

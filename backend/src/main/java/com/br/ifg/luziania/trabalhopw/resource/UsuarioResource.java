@@ -1,5 +1,6 @@
 package com.br.ifg.luziania.trabalhopw.resource;
 
+import com.br.ifg.luziania.trabalhopw.dto.CriarUsuarioDTO;
 import com.br.ifg.luziania.trabalhopw.dto.UsuarioDTO;
 import com.br.ifg.luziania.trabalhopw.model.Sessao;
 import com.br.ifg.luziania.trabalhopw.model.Usuario;
@@ -77,6 +78,31 @@ public class UsuarioResource {
         UsuarioDTO usuarioDTO = converterParaDTO(usuarioAutenticado);
 
         return Response.ok(usuarioDTO).build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response criar(CriarUsuarioDTO dados) {
+
+        try {
+
+            Usuario usuario = usuarioService.criar(dados);
+
+            UsuarioDTO usuarioDTO = converterParaDTO(usuario);
+
+            return Response
+                    .status(Response.Status.CREATED)
+                    .entity(usuarioDTO)
+                    .build();
+
+        } catch (IllegalArgumentException e) {
+
+            return Response
+                    .status(Response.Status.CONFLICT)
+                    .entity("{\"erro\":\"" + e.getMessage() + "\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+        }
     }
 }
 

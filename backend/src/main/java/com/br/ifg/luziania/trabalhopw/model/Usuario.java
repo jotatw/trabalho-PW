@@ -66,4 +66,15 @@ public class Usuario {
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
     }
+
+    @PrePersist
+    void prepararCriacao() {
+        if (criadoEm == null) {
+            criadoEm = OffsetDateTime.now();
+        }
+
+        if (ativo == null) {
+            ativo = true;
+        }
+    }
 }

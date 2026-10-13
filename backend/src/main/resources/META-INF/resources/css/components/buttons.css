@@ -1,0 +1,8 @@
+.button-primary {
+    padding: 10px 16px;
+
+    border: none;
+    border-radius: var(--radius-small);
+
+    cursor: pointer;
+}

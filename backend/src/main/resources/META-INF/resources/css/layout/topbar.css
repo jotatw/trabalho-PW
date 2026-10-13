@@ -1,0 +1,22 @@
+.topbar {
+    padding: 24px 32px;
+
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topbar h2 {
+    margin-bottom: 4px;
+}
+
+.topbar p {
+    color: var(--color-text-muted);
+}
+
+.user-info {
+    font-weight: bold;
+}

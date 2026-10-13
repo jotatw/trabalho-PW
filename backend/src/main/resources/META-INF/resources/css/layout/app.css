@@ -1,0 +1,21 @@
+.app {
+    min-height: 100vh;
+    display: flex;
+}
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+@media (max-width: 650px) {
+
+    .sidebar {
+        width: 190px;
+    }
+
+    .topbar {
+        padding: 20px;
+    }
+
+}

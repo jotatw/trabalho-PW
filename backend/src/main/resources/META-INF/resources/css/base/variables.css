@@ -1,0 +1,24 @@
+:root {
+    --color-background: #f4f6f8;
+    --color-surface: #ffffff;
+
+    --color-border: #dddddd;
+    --color-border-light: #eeeeee;
+
+    --color-text: #333333;
+    --color-text-muted: #666666;
+
+    --color-hover: #f1f1f1;
+    --color-active: #e8e8e8;
+
+    --color-input-border: #cccccc;
+
+    --radius-small: 6px;
+    --radius-medium: 10px;
+    --radius-large: 12px;
+
+    --spacing-small: 8px;
+    --spacing-medium: 16px;
+    --spacing-large: 24px;
+    --spacing-xlarge: 32px;
+}

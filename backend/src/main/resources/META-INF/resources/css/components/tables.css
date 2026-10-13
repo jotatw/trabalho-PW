@@ -1,0 +1,30 @@
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 14px 16px;
+    text-align: left;
+
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+th {
+    font-weight: bold;
+    background: #f8f8f8;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}

@@ -7,6 +7,7 @@ import com.br.ifg.luziania.trabalhopw.model.Usuario;
 import com.br.ifg.luziania.trabalhopw.service.LogService;
 import com.br.ifg.luziania.trabalhopw.service.UsuarioService;
 import com.br.ifg.luziania.trabalhopw.service.SessaoService;
+import com.br.ifg.luziania.trabalhopw.exception.PerfilInvalidoException;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -33,10 +34,7 @@ public class UsuarioResource {
 
     @GET
     public List<UsuarioDTO> listar() {
-        return usuarioService.listarTodos()
-                .stream()
-                .map(this::converterParaDTO)
-                .toList();
+        return usuarioService.listarTodosDTO();
     }
 
     private UsuarioDTO converterParaDTO(Usuario usuario) {
@@ -44,7 +42,8 @@ public class UsuarioResource {
                 usuario.getId(),
                 usuario.getNome(),
                 usuario.getEmail(),
-                usuario.getAtivo()
+                usuario.getAtivo(),
+                usuarioService.buscarNomePerfil(usuario.getId())
         );
     }
 
@@ -93,6 +92,14 @@ public class UsuarioResource {
             return Response
                     .status(Response.Status.CREATED)
                     .entity(usuarioDTO)
+                    .build();
+
+        } catch (PerfilInvalidoException e) {
+
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity("{\"erro\":\"" + e.getMessage() + "\"}")
+                    .type(MediaType.APPLICATION_JSON)
                     .build();
 
         } catch (IllegalArgumentException e) {

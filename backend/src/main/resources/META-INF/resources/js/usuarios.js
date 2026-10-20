@@ -23,7 +23,6 @@ async function carregarUsuarios() {
                     </td>
                 </tr>
             `;
-
             return;
         }
 
@@ -35,6 +34,7 @@ async function carregarUsuarios() {
                 <td>${usuario.id}</td>
                 <td>${usuario.nome}</td>
                 <td>${usuario.email}</td>
+                <td>${usuario.perfil ||  "Sem perfil"}</td>
                 <td>${usuario.ativo ? "Ativo" : "Inativo"}</td>
                 <td>
                     <button type="button">
@@ -42,7 +42,6 @@ async function carregarUsuarios() {
                     </button>
                 </td>
             `;
-
             lista.appendChild(linha);
         });
 
@@ -60,7 +59,6 @@ async function carregarUsuarios() {
     }
 }
 
-
 function configurarFormularioUsuario() {
 
     const abrirButton =
@@ -77,32 +75,22 @@ function configurarFormularioUsuario() {
 
 
     abrirButton.addEventListener("click", () => {
-
         container.classList.remove("hidden");
-
     });
 
 
     cancelarButton.addEventListener("click", () => {
-
         container.classList.add("hidden");
-
         form.reset();
-
         limparMensagem();
 
     });
 
-
     form.addEventListener("submit", async (event) => {
-
         event.preventDefault();
-
         await cadastrarUsuario();
-
     });
 }
-
 
 async function cadastrarUsuario() {
 
@@ -115,29 +103,37 @@ async function cadastrarUsuario() {
     const senha =
         document.getElementById("senha").value;
 
+    const perfilId =
+        document.getElementById("perfilId").value;
 
     mostrarMensagem("Cadastrando usuário...", false);
-
 
     try {
 
         const response = await fetch("/usuarios", {
-
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json"
             },
-
             body: JSON.stringify({
                 nome,
                 email,
-                senha
+                senha,
+                perfilId: Number(perfilId)
             })
-
         });
 
+        if (response.status === 400) {
+            const erro = await response.json();
 
+            mostrarMensagem(
+                erro.erro || "Perfil inválido.",
+                true
+            );
+
+            return;
+        }
+        
         if (response.status === 409) {
 
             const erro = await response.json();
@@ -146,35 +142,25 @@ async function cadastrarUsuario() {
                 erro.erro || "E-mail já cadastrado.",
                 true
             );
-
             return;
         }
 
-
         if (!response.ok) {
-
             throw new Error(
                 "Não foi possível cadastrar o usuário."
             );
-
         }
-
 
         document
             .getElementById("usuario-form")
             .reset();
 
-
         document
             .getElementById("usuario-form-container")
             .classList.add("hidden");
 
-
         limparMensagem();
-
-
         await carregarUsuarios();
-
 
     } catch (error) {
 
@@ -184,10 +170,49 @@ async function cadastrarUsuario() {
             "Erro ao cadastrar usuário.",
             true
         );
-
     }
 }
 
+async function carregarPerfis() {
+    const select = document.getElementById("perfilId");
+
+    const opcaoInicial = document.createElement("option");
+    opcaoInicial.value = "";
+    opcaoInicial.textContent = "Selecione um perfil";
+
+    select.replaceChildren(opcaoInicial);
+
+    try {
+        const response = await fetch("/perfis");
+
+        if (!response.ok) {
+            throw new Error("Erro ao buscar perfis.");
+        }
+
+        const perfis = await response.json();
+
+        if (perfis.length === 0) {
+            opcaoInicial.textContent = "Nenhum perfil disponível";
+            select.disabled = true;
+            return;
+        }
+
+        perfis.forEach(perfil => {
+            const opcao = document.createElement("option");
+
+            opcao.value = perfil.id;
+            opcao.textContent = perfil.nome;
+
+            select.appendChild(opcao);
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        opcaoInicial.textContent = "Erro ao carregar perfis";
+        select.disabled = true;
+    }
+}
 
 function mostrarMensagem(mensagem, erro) {
 

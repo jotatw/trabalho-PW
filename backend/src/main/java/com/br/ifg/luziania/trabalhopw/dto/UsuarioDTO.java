@@ -6,15 +6,20 @@ public class UsuarioDTO {
     private String nome;
     private String email;
     private Boolean ativo;
+    private String perfil;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Long id, String nome, String email, Boolean ativo) {
+    public UsuarioDTO(Long id, String nome, String email, Boolean ativo, String perfil) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.ativo = ativo;
+        this.perfil = perfil;
+    }
+
+    public UsuarioDTO(Long id, String nome, String email, Boolean ativo) {
     }
 
     public Long getId() {
@@ -31,5 +36,9 @@ public class UsuarioDTO {
 
     public Boolean getAtivo() {
         return ativo;
+    }
+
+    public String getPerfil(){
+        return perfil;
     }
 }

@@ -5,6 +5,7 @@ public class CriarUsuarioDTO {
     private String nome;
     private String email;
     private String senha;
+    private Long perfilId;
 
     public CriarUsuarioDTO() {
     }
@@ -19,5 +20,9 @@ public class CriarUsuarioDTO {
 
     public String getSenha() {
         return senha;
+    }
+
+    public Long getPerfilId(){
+        return perfilId;
     }
 }

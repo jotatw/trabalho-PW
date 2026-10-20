@@ -115,6 +115,16 @@
 
                         </div>
 
+                        <div class="form-group">
+                            <label for="perfilId">
+                                Perfil
+                            </label>
+
+                            <select id="perfilId" name="perfilId" required>
+                                <option value="">Carregando perfis...</option>
+                            </select>
+                        </div>
+
                     </div>
 
                     <div id="usuario-form-mensagem"></div>
@@ -166,6 +176,7 @@
     carregarLayout("usuarios");
     carregarUsuarios();
     configurarFormularioUsuario()
+    carregarPerfis()
 </script>
 
 </body>

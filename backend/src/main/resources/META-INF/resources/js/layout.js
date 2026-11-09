@@ -1,70 +1,67 @@
 function carregarLayout(nomePagina) {
-
     const app = document.getElementById("app-layout");
 
     if (!app) {
         return;
     }
 
+    const usuarioJSON = sessionStorage.getItem("usuario");
+
+    if (!usuarioJSON) {
+        window.location.href = "/";
+        return;
+    }
+
+    const usuario = JSON.parse(usuarioJSON);
+    const perfil = (usuario.perfil || "").trim().toUpperCase();
+    const ehAdmin = perfil === "ADMIN";
+
+    const menuBase = [
+        { pagina: "dashboard", texto: "Dashboard", url: "/dashboard.html" },
+        { pagina: "clientes", texto: "Clientes", url: "/pages/clientes.html" },
+        { pagina: "veiculos", texto: "Veículos", url: "/pages/veiculos.html" },
+        { pagina: "reservas", texto: "Reservas", url: "/pages/reservas.html" },
+        { pagina: "locacoes", texto: "Locações", url: "/pages/locacoes.html" }
+    ];
+
+    if (ehAdmin) {
+        menuBase.push(
+            { pagina: "usuarios", texto: "Usuários", url: "/pages/usuarios.html" },
+            { pagina: "relatorios", texto: "Relatórios", url: "/pages/relatorios.html" }
+        );
+    }
+
+    const itensMenu = menuBase.map(item => `
+        <a href="${item.url}"
+           class="menu-item ${nomePagina === item.pagina ? "active" : ""}">
+            ${item.texto}
+        </a>
+    `).join("");
+
+    const menuAdministracao = ehAdmin ? `
+        <a href="/pages/administracao.html"
+           class="menu-item ${nomePagina === "administracao" ? "active" : ""}">
+            Administração
+        </a>
+    ` : "";
+
     const sidebar = `
         <aside class="sidebar">
-
             <div class="sidebar-header">
                 <h1>Locadora</h1>
             </div>
 
             <nav class="menu">
-
-                <a href="/dashboard.html"
-                   class="menu-item ${nomePagina === "dashboard" ? "active" : ""}">
-                    Dashboard
-                </a>
-
-                <a href="/pages/clientes.html"
-                   class="menu-item ${nomePagina === "clientes" ? "active" : ""}">
-                    Clientes
-                </a>
-
-                <a href="/pages/veiculos.html"
-                   class="menu-item ${nomePagina === "veiculos" ? "active" : ""}">
-                    Veículos
-                </a>
-
-                <a href="/pages/reservas.html"
-                   class="menu-item ${nomePagina === "reservas" ? "active" : ""}">
-                    Reservas
-                </a>
-
-                <a href="/pages/locacoes.html"
-                   class="menu-item ${nomePagina === "locacoes" ? "active" : ""}">
-                    Locações
-                </a>
-
-                <a href="/pages/usuarios.html"
-                   class="menu-item ${nomePagina === "usuarios" ? "active" : ""}">
-                    Usuários
-                </a>
-
-                <a href="/pages/relatorios.html"
-                   class="menu-item ${nomePagina === "relatorios" ? "active" : ""}">
-                    Relatórios
-                </a>
-
+                ${itensMenu}
             </nav>
 
             <div class="sidebar-footer">
-
-                <a href="/pages/administracao.html"
-                   class="menu-item ${nomePagina === "administracao" ? "active" : ""}">
-                    Administração
-                </a>
+                ${menuAdministracao}
 
                 <button id="logout-button">
                     Sair
                 </button>
-
             </div>
-
         </aside>
     `;
 
@@ -74,9 +71,7 @@ function carregarLayout(nomePagina) {
     carregarUsuario();
 }
 
-
 function configurarLogout() {
-
     const logoutButton = document.getElementById("logout-button");
 
     if (!logoutButton) {
@@ -86,20 +81,15 @@ function configurarLogout() {
     logoutButton.addEventListener("click", () => {
 
         sessionStorage.removeItem("usuario");
-
         window.location.href = "/";
     });
 }
 
-
 function carregarUsuario() {
-
     const usuarioJSON = sessionStorage.getItem("usuario");
 
     if (!usuarioJSON) {
-
         window.location.href = "/";
-
         return;
     }
 

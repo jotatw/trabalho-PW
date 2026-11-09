@@ -1,0 +1,26 @@
+.login-card {
+    width: 100%;
+    max-width: 400px;
+
+    padding: 32px;
+
+    background: #ffffff;
+    border-radius: 12px;
+}
+
+.login-header {
+    margin-bottom: 24px;
+}
+
+.login-header h1 {
+    margin-bottom: 8px;
+}
+
+.login-header p {
+    color: #666666;
+}
+
+.login-message {
+    margin-top: 16px;
+    text-align: center;
+}

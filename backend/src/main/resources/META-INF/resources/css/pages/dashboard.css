@@ -18,3 +18,27 @@
         padding: 20px;
     }
 }
+
+.dashboard-card {
+    padding: 24px;
+
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+}
+
+.dashboard-card h3 {
+    margin-bottom: 16px;
+}
+
+.dashboard-card strong {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 32px;
+}
+
+.dashboard-card p {
+    color: #666666;
+}

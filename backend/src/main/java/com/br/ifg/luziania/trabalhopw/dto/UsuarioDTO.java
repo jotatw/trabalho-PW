@@ -20,6 +20,7 @@ public class UsuarioDTO {
     }
 
     public UsuarioDTO(Long id, String nome, String email, Boolean ativo) {
+        this(id, nome, email, ativo, null);
     }
 
     public Long getId() {

@@ -8,6 +8,8 @@ import com.br.ifg.luziania.trabalhopw.service.LogService;
 import com.br.ifg.luziania.trabalhopw.service.UsuarioService;
 import com.br.ifg.luziania.trabalhopw.service.SessaoService;
 import com.br.ifg.luziania.trabalhopw.exception.PerfilInvalidoException;
+import com.br.ifg.luziania.trabalhopw.dto.LoginRespostaDTO;
+import com.br.ifg.luziania.trabalhopw.service.JwtService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -17,10 +19,13 @@ import com.br.ifg.luziania.trabalhopw.dto.LoginDTO;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.Consumes;
+import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.PermitAll;
 import java.util.List;
 
 @Path("/usuarios")
 @Produces(MediaType.APPLICATION_JSON)
+@Authenticated
 public class UsuarioResource {
 
     @Inject
@@ -31,6 +36,9 @@ public class UsuarioResource {
 
     @Inject
     LogService logService;
+
+    @Inject
+    JwtService jwtService;
 
     @GET
     public List<UsuarioDTO> listar() {
@@ -46,9 +54,10 @@ public class UsuarioResource {
                 usuarioService.buscarNomePerfil(usuario.getId())
         );
     }
-
+    
     @POST
     @Path("/login")
+    @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(LoginDTO loginDTO) {
 
@@ -64,20 +73,50 @@ public class UsuarioResource {
 
         Usuario usuarioAutenticado = usuario.get();
 
+        // Impede o acesso de usuários desativados.
+        if (!Boolean.TRUE.equals(usuarioAutenticado.getAtivo())) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
+        // Recupera o perfil do usuário.
+        String perfil = usuarioService.buscarNomePerfil(usuarioAutenticado.getId());
+
+        if (perfil == null || perfil.isBlank() || "Sem perfil".equals(perfil)) {
+            return Response.status(Response.Status.FORBIDDEN).build();
+        }
+
+        // Gera o JWT.
+        String token = jwtService.gerarToken(
+                usuarioAutenticado.getId(),
+                usuarioAutenticado.getEmail(),
+                perfil
+        );
+
+        // Mantém o registro de sessão existente.
         Sessao sessao = sessaoService.iniciarSessao(usuarioAutenticado);
 
         logService.registrar(
                 usuarioAutenticado,
                 sessao,
-                "USO",                "INFO",
+                "USO",
+                "INFO",
                 "LOGIN",
                 "Usuário realizou login no sistema"
         );
 
-        UsuarioDTO usuarioDTO = converterParaDTO(usuarioAutenticado);
+        UsuarioDTO usuarioDTO = new UsuarioDTO(
+                usuarioAutenticado.getId(),
+                usuarioAutenticado.getNome(),
+                usuarioAutenticado.getEmail(),
+                usuarioAutenticado.getAtivo(),
+                perfil
+        );
 
-        return Response.ok(usuarioDTO).build();
+        LoginRespostaDTO resposta = new LoginRespostaDTO(token, usuarioDTO);
+
+        return Response.ok(resposta).build();
     }
+
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

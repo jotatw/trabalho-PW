@@ -9,8 +9,13 @@
     align-items: center;
 }
 
+.topbar > div:first-child { min-width: 0; }
+
 .topbar h2 {
     margin-bottom: 4px;
+    color: var(--color-primary-dark);
+    font-size: 25px;
+    letter-spacing: -.035em;
 }
 
 .topbar p {
@@ -18,5 +23,13 @@
 }
 
 .user-info {
-    font-weight: bold;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+@media (max-width: 760px) {
+    .user-info { font-size: 14px; }
 }

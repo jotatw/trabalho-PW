@@ -1,0 +1,4 @@
+package com.br.ifg.luziania.trabalhopw.resource;
+import com.br.ifg.luziania.trabalhopw.dto.*;import com.br.ifg.luziania.trabalhopw.service.VeiculoService;import jakarta.annotation.security.RolesAllowed;import jakarta.inject.Inject;import jakarta.validation.Valid;import jakarta.ws.rs.*;import jakarta.ws.rs.core.MediaType;import java.util.List;
+@Path("/veiculos") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON) @RolesAllowed({"ADMIN","ATENDENTE"})
+public class VeiculoResource {@Inject VeiculoService service;@GET public List<VeiculoDTO> listar(){return service.listar();}@POST public VeiculoDTO criar(@Valid VeiculoEntradaDTO dto){return service.criar(dto);}@PUT @Path("/{id}") public VeiculoDTO atualizar(@PathParam("id") Long id,@Valid VeiculoEntradaDTO dto){return service.atualizar(id,dto);}@DELETE @Path("/{id}") public void desativar(@PathParam("id") Long id){service.desativar(id);}}

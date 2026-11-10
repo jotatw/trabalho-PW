@@ -18,7 +18,7 @@ function carregarLayout(nomePagina) {
     const ehAdmin = perfil === "ADMIN";
 
     const menuBase = [
-        { pagina: "dashboard", texto: "Dashboard", url: "/dashboard.html" },
+        { pagina: "dashboard", texto: "Visão geral", url: "/dashboard.html" },
         { pagina: "clientes", texto: "Clientes", url: "/pages/clientes.html" },
         { pagina: "veiculos", texto: "Veículos", url: "/pages/veiculos.html" },
         { pagina: "reservas", texto: "Reservas", url: "/pages/reservas.html" },
@@ -81,7 +81,7 @@ function configurarLogout() {
 
     logoutButton.addEventListener("click", () => {
         sessionStorage.removeItem("usuario");
-        sessionStorage.removeItem("usuario");
+        sessionStorage.removeItem("token");
 
         window.location.href = "/";
     });

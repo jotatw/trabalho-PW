@@ -1,6 +1,7 @@
 package com.br.ifg.luziania.trabalhopw.resource;
 
 import com.br.ifg.luziania.trabalhopw.dto.CriarUsuarioDTO;
+import com.br.ifg.luziania.trabalhopw.dto.AtualizarUsuarioDTO;
 import com.br.ifg.luziania.trabalhopw.dto.UsuarioDTO;
 import com.br.ifg.luziania.trabalhopw.model.Sessao;
 import com.br.ifg.luziania.trabalhopw.model.Usuario;
@@ -19,13 +20,19 @@ import com.br.ifg.luziania.trabalhopw.dto.LoginDTO;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.Consumes;
-import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.annotation.security.PermitAll;
 import java.util.List;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.SecurityContext;
 
 @Path("/usuarios")
 @Produces(MediaType.APPLICATION_JSON)
-@Authenticated
+@RolesAllowed("ADMIN")
 public class UsuarioResource {
 
     @Inject
@@ -39,6 +46,9 @@ public class UsuarioResource {
 
     @Inject
     JwtService jwtService;
+
+    @Context
+    SecurityContext securityContext;
 
     @GET
     public List<UsuarioDTO> listar() {
@@ -59,7 +69,7 @@ public class UsuarioResource {
     @Path("/login")
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response login(LoginDTO loginDTO) {
+    public Response login(@Valid LoginDTO loginDTO) {
 
         var usuario = usuarioService.buscarPorEmail(loginDTO.getEmail());
 
@@ -120,35 +130,33 @@ public class UsuarioResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response criar(CriarUsuarioDTO dados) {
+    public Response criar(@Valid CriarUsuarioDTO dados) {
+        Usuario usuario = usuarioService.criar(dados);
+        UsuarioDTO usuarioDTO = converterParaDTO(usuario);
+        return Response.status(Response.Status.CREATED).entity(usuarioDTO).build();
+    }
 
-        try {
+    @PUT
+    @Path("/{id}")
+    public UsuarioDTO atualizar(@PathParam("id") Long id, @Valid AtualizarUsuarioDTO dados) {
+        String ator = securityContext.getUserPrincipal() == null ? null : securityContext.getUserPrincipal().getName();
+        return usuarioService.atualizar(id, dados, ator);
+    }
 
-            Usuario usuario = usuarioService.criar(dados);
+    @DELETE
+    @Path("/{id}")
+    public Response desativar(@PathParam("id") Long id) {
+        String ator = securityContext.getUserPrincipal() == null ? null : securityContext.getUserPrincipal().getName();
+        usuarioService.desativar(id, ator);
+        return Response.noContent().build();
+    }
 
-            UsuarioDTO usuarioDTO = converterParaDTO(usuario);
-
-            return Response
-                    .status(Response.Status.CREATED)
-                    .entity(usuarioDTO)
-                    .build();
-
-        } catch (PerfilInvalidoException e) {
-
-            return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity("{\"erro\":\"" + e.getMessage() + "\"}")
-                    .type(MediaType.APPLICATION_JSON)
-                    .build();
-
-        } catch (IllegalArgumentException e) {
-
-            return Response
-                    .status(Response.Status.CONFLICT)
-                    .entity("{\"erro\":\"" + e.getMessage() + "\"}")
-                    .type(MediaType.APPLICATION_JSON)
-                    .build();
-        }
+    @PUT
+    @Path("/{id}/status")
+    public Response alterarAtivo(@PathParam("id") Long id, @Valid com.br.ifg.luziania.trabalhopw.dto.StatusUsuarioDTO dados) {
+        String ator = securityContext.getUserPrincipal() == null ? null : securityContext.getUserPrincipal().getName();
+        usuarioService.alterarAtivo(id, dados.getAtivo(), ator);
+        return Response.noContent().build();
     }
 }
 

@@ -1,17 +1,1 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
-    <link rel="stylesheet" href="/css/base/reset.css">
-    <link rel="stylesheet" href="/css/base/variables.css">
-
-    <link rel="stylesheet" href="/css/layout/app.css">
-    <link rel="stylesheet" href="/css/layout/sidebar.css">
-    <link rel="stylesheet" href="/css/layout/topbar.css">
-</head>
-<body>
-
-</body>
-</html>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Reservas - Locadora</title><link rel="stylesheet" href="/css/base/reset.css"><link rel="stylesheet" href="/css/base/variables.css"><link rel="stylesheet" href="/css/layout/app.css"><link rel="stylesheet" href="/css/layout/sidebar.css"><link rel="stylesheet" href="/css/layout/topbar.css"><link rel="stylesheet" href="/css/components/buttons.css"><link rel="stylesheet" href="/css/components/forms.css"><link rel="stylesheet" href="/css/components/tables.css"><link rel="stylesheet" href="/css/pages/usuarios.css"></head><body><div class="app" id="app-layout"><main class="main-content"><header class="topbar"><div><h2>Reservas</h2><p>Solicitações e períodos reservados</p></div><div class="user-info"><span id="user-name">Usuário</span></div></header><section class="page-content"><div class="page-header"><div><span class="eyebrow">OPERAÇÃO</span><h3>Reservas</h3><p>Cadastre uma solicitação e acompanhe seu status.</p></div><button id="abrir-form" class="button-primary">Nova reserva</button></div><div id="form-panel" class="form-container hidden"><form id="reserva-form"><div class="form-grid"><div class="form-group"><label for="clienteId">Cliente</label><select id="clienteId" required></select></div><div class="form-group"><label for="categoriaId">Categoria</label><select id="categoriaId" required></select></div><div class="form-group"><label for="dataInicio">Retirada</label><input id="dataInicio" type="datetime-local" required></div><div class="form-group"><label for="dataFim">Devolução prevista</label><input id="dataFim" type="datetime-local" required></div><div class="form-group"><label for="observacoes">Observações</label><input id="observacoes" maxlength="500"></div></div><p id="mensagem" role="status"></p><button class="button-primary">Criar reserva</button><button type="button" id="cancelar">Cancelar</button></form></div><div class="table-container"><table><thead><tr><th>Cliente</th><th>Categoria</th><th>Período</th><th>Status</th><th>Ações</th></tr></thead><tbody id="reservas-lista"><tr><td colspan="5">Carregando...</td></tr></tbody></table></div></section></main></div><script src="/js/api.js"></script><script src="/js/layout.js"></script><script src="/js/reservas.js"></script><script>carregarLayout('reservas'); iniciarReservas();</script></body></html>

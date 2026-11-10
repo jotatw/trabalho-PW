@@ -90,4 +90,9 @@ public class Reserva {
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
+
+    @PrePersist
+    void aoCriar() {
+        if (criadoEm == null) criadoEm = OffsetDateTime.now();
+    }
 }

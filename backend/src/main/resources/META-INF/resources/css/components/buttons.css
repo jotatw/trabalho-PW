@@ -5,4 +5,9 @@
     border-radius: var(--radius-small);
 
     cursor: pointer;
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+    transition: background .15s ease, transform .15s ease;
 }
+.button-primary:hover { background: #1d4ed8; transform: translateY(-1px); }

@@ -7,17 +7,26 @@
     <title>Locadora de Veículos</title>
 
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/pages/login.css">
 </head>
 
 <body>
 
 <main class="login-container">
 
+    <section class="login-brand" aria-label="Locadora">
+        <div class="brand-mark">L</div>
+        <span class="brand-kicker">GESTÃO DE FROTAS</span>
+        <h2>Mobilidade organizada.<br>Gestão mais simples.</h2>
+        <p>Acesse o painel da sua locadora para acompanhar a operação em um só lugar.</p>
+        <div class="brand-road" aria-hidden="true"><span></span></div>
+    </section>
+
     <section class="login-card">
 
         <header class="login-header">
             <h1>Locadora de Veículos</h1>
-            <p>Acesse a sua conta</p>
+            <p>Entre com suas credenciais para continuar.</p>
         </header>
 
         <form id="login-form">
@@ -30,6 +39,7 @@
                         name="email"
                         placeholder="seu@email.com"
                         required
+                        autocomplete="username"
                 >
             </div>
 
@@ -41,6 +51,7 @@
                         name="senha"
                         placeholder="Digite sua senha"
                         required
+                        autocomplete="current-password"
                 >
             </div>
 

@@ -89,4 +89,9 @@ public class Cliente {
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
     }
+
+    @PrePersist
+    void aoCriar() {
+        if (criadoEm == null) criadoEm = OffsetDateTime.now();
+    }
 }

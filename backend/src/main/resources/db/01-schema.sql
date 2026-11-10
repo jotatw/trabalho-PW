@@ -160,6 +160,9 @@ CREATE TABLE reservas (
                                   ))
 );
 
+CREATE INDEX idx_reservas_categoria_periodo_status
+    ON reservas (categoria_id, status, data_inicio, data_fim);
+
 
 -- ============================================================
 -- LOCACOES
@@ -214,6 +217,9 @@ CREATE TABLE locacoes (
                                   ))
 );
 
+CREATE INDEX idx_locacoes_veiculo_periodo_status
+    ON locacoes (veiculo_id, status, inicio, previsao_devolucao);
+
 
 -- ============================================================
 -- SESSOES
@@ -259,6 +265,12 @@ CREATE TABLE logs (
                       acao VARCHAR(100) NOT NULL,
                       mensagem TEXT NOT NULL,
                       data_hora TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                      metodo_http VARCHAR(10),
+                      url VARCHAR(2048),
+                      ip_cliente VARCHAR(45),
+                      status_http INTEGER,
+                      payload TEXT,
+                      headers TEXT,
 
                       CONSTRAINT fk_logs_usuario
                           FOREIGN KEY (usuario_id)

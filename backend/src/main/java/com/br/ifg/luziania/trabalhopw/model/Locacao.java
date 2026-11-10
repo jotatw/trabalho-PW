@@ -125,4 +125,9 @@ public class Locacao {
     public OffsetDateTime getCriadoEm() {
         return criadoEm;
     }
+
+    @PrePersist
+    void aoCriar() {
+        if (criadoEm == null) criadoEm = OffsetDateTime.now();
+    }
 }

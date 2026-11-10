@@ -21,8 +21,12 @@ td {
 }
 
 th {
-    font-weight: bold;
-    background: #f8f8f8;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    background: #f7f9fc;
 }
 
 tbody tr:last-child td {

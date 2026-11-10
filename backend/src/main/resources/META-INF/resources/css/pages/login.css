@@ -2,10 +2,12 @@
     width: 100%;
     max-width: 400px;
 
-    padding: 32px;
+    padding: 40px;
 
     background: #ffffff;
-    border-radius: 12px;
+    border: 1px solid #e3e9f1;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(20,43,74,.1);
 }
 
 .login-header {
@@ -14,11 +16,23 @@
 
 .login-header h1 {
     margin-bottom: 8px;
+    color: #142b4a;
+    font-size: 27px;
+    letter-spacing: -.04em;
 }
 
 .login-header p {
-    color: #666666;
+    color: #6b7280;
 }
+.login-brand { width: min(420px, 38vw); color: #142b4a; }
+.brand-mark { width: 48px; height: 48px; display: grid; place-items: center; margin-bottom: 30px; border-radius: 14px; background: #142b4a; color: #fff; font-size: 24px; font-weight: 700; }
+.brand-kicker { color: #2563eb; font-size: 11px; font-weight: 700; letter-spacing: .16em; }
+.login-brand h2 { margin: 12px 0; font-size: clamp(30px, 3.5vw, 44px); line-height: 1.12; letter-spacing: -.045em; }
+.login-brand p { max-width: 350px; color: #6b7280; }
+.brand-road { height: 5px; width: 180px; margin-top: 34px; border-radius: 9px; background: #dbeafe; }
+.brand-road span { display: block; width: 55px; height: 5px; border-radius: 9px; background: #2563eb; }
+.login-message { min-height: 22px; color: #6b7280; font-size: 14px; }
+@media (max-width: 760px) { .login-brand { width: min(400px, 100%); text-align: center; } .brand-mark, .brand-road { margin-left: auto; margin-right: auto; } .login-brand p { margin: auto; } .login-brand h2 { font-size: 30px; } .login-card { max-width: 440px; padding: 30px 26px; } }
 
 .login-message {
     margin-top: 16px;

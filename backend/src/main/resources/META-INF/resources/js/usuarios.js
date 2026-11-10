@@ -4,7 +4,7 @@ async function carregarUsuarios() {
 
     try {
 
-        const response = await fetch("/usuarios");
+        const response = await apiFetch("/usuarios");
 
         if (!response.ok) {
             throw new Error("Erro ao buscar usuários.");
@@ -110,7 +110,7 @@ async function cadastrarUsuario() {
 
     try {
 
-        const response = await fetch("/usuarios", {
+        const response = await apiFetch("/usuarios", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -183,7 +183,7 @@ async function carregarPerfis() {
     select.replaceChildren(opcaoInicial);
 
     try {
-        const response = await fetch("/perfis");
+        const response = await apiFetch("/perfis");
 
         if (!response.ok) {
             throw new Error("Erro ao buscar perfis.");

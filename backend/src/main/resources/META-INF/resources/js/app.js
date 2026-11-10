@@ -12,34 +12,52 @@ loginForm.addEventListener("submit", async (event) => {
     try {
         const response = await fetch("/usuarios/login", {
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json"
             },
-
             body: JSON.stringify({
                 email: email,
                 senha: senha
             })
         });
 
-        if (!response.ok) {
+        if (response.status === 401) {
             loginMessage.textContent = "E-mail ou senha inválidos.";
             return;
         }
 
-        const usuario = await response.json();
+        if (response.status === 403) {
+            loginMessage.textContent =
+                "Usuário inativo ou sem perfil autorizado.";
+            return;
+        }
+
+        if (!response.ok) {
+            loginMessage.textContent =
+                "Não foi possível realizar o login.";
+            return;
+        }
+
+        const resposta = await response.json();
+
+        if (!resposta.token || !resposta.usuario) {
+            loginMessage.textContent =
+                "Resposta de autenticação inválida.";
+            return;
+        }
+
+        const usuario = resposta.usuario;
+
+        // Armazena o JWT e os dados do usuário.
+        sessionStorage.setItem("token", resposta.token);
+        sessionStorage.setItem("usuario", JSON.stringify(usuario));
 
         loginMessage.textContent = `Bem-vindo, ${usuario.nome}!`;
-
-        console.log("Usuário autenticado:", usuario);
-
-        sessionStorage.setItem("usuario", JSON.stringify(usuario));
 
         window.location.href = "/dashboard.html";
 
     } catch (error) {
-        console.error(error);
+        console.error("Erro no login:", error);
 
         loginMessage.textContent =
             "Não foi possível conectar ao servidor.";

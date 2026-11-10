@@ -5,9 +5,10 @@ function carregarLayout(nomePagina) {
         return;
     }
 
+    const token = sessionStorage.getItem("token");
     const usuarioJSON = sessionStorage.getItem("usuario");
 
-    if (!usuarioJSON) {
+    if (!token || !usuarioJSON) {
         window.location.href = "/";
         return;
     }
@@ -79,16 +80,18 @@ function configurarLogout() {
     }
 
     logoutButton.addEventListener("click", () => {
-
         sessionStorage.removeItem("usuario");
+        sessionStorage.removeItem("usuario");
+
         window.location.href = "/";
     });
 }
 
 function carregarUsuario() {
+    const token = sessionStorage.getItem("token");
     const usuarioJSON = sessionStorage.getItem("usuario");
 
-    if (!usuarioJSON) {
+    if (!token || !usuarioJSON) {
         window.location.href = "/";
         return;
     }
